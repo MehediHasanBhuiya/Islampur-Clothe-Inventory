@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using IslampurClotheEnventory.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using IslampurClotheEnventory.Data.interfaces;
+using IslampurClotheEnventory.Services;
 
 namespace IslampurClotheEnventory
 {
@@ -35,12 +37,19 @@ namespace IslampurClotheEnventory
             });
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
+                options.UseMySql(
                     Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContextPool<IslampurDbContext>(optiones =>
+                optiones.UseMySql(
+                    Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.AddScoped<IBasicServices, BasicServices>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

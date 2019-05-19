@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace IslampurClotheEnventory.Data.Models
 {
     public class PurchesInfo
     {
+        [Key]
         public int PurchesId { get; set; }
         public string PurchesPersonName { get; set; }
         public string PurchesPersonPhoneNumber { get; set; }
