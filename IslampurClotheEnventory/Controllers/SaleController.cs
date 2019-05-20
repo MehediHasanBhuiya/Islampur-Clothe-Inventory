@@ -29,7 +29,7 @@ namespace IslampurClotheEnventory.Controllers
         }
 
         // GET: Sale/Create
-        public ActionResult Create()
+        public ActionResult Add()
         {
             return View();
         }
@@ -37,11 +37,11 @@ namespace IslampurClotheEnventory.Controllers
         // POST: Sale/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(SaleView sale)
+        public ActionResult Add(SaleView sale)
         {
             if (ModelState.IsValid)
             {
-                if(_services.IsCustomerNameExists(sale.CustomerName) == null)
+                if(_services.GetCustomerByName(sale.CustomerName) == null)
                 {
                     Customer customer = new Customer
                     {
@@ -59,11 +59,14 @@ namespace IslampurClotheEnventory.Controllers
                     OnCash = sale.OnCash,
                     OnDebt = sale.SalePrice - sale.OnCash,
                     SaleTime = DateTime.Now,
-                    CustomerId = _services.IsCustomerNameExists(sale.CustomerName).CustomerId,
+                    CustomerId = _services.GetCustomerByName(sale.CustomerName).CustomerId,
                     ProductId = sale.ProductId,
                     
                 };
                 _services.SetSale(s);
+                _services.UpdateProductQuentityForSale(sale.ProductId, sale.SaleQuentity);
+
+
             }
             return View();
         }

@@ -14,7 +14,8 @@ namespace IslampurClotheEnventory.Data.Models
         public int ProductId { get; set; }
         public string ProductName { get; set; }
         public int ProductQuentity { get; set; }
-        public double ProductPrice { get; set; }
+        public double ProductPurchesPrice { get; set; }
+        public double ProductSalePrice { get; set; }
         public bool IsStoed { get; set; }
 
 
