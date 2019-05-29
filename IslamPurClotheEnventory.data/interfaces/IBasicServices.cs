@@ -9,7 +9,10 @@ namespace IslampurClotheEnventory.Data.interfaces
 {
     public interface IBasicServices
     {
+        void DeleteProduct(int id);
+
         void EditCustomer(Customer customer);
+        void EditProduct(Product product);
 
         void SetPurchesInfo(PurchesInfo purchesInfo);
         void SetSale(Sale sale);
@@ -17,6 +20,7 @@ namespace IslampurClotheEnventory.Data.interfaces
         void SetProduct(Product product);
 
         void GetAllSale();
+        IEnumerable<Product> GetAllProduct();
         void GetSaleById(int id);
         Product GetProductById(int id);
         Customer GetCustomerById(int id);
@@ -24,6 +28,7 @@ namespace IslampurClotheEnventory.Data.interfaces
         Customer GetCustomerByName(string name);
         Product GetProductByName(string name);
 
+        void UpdateProduct(Product product);
         void UpdateProductQuentityForSale(int productId,int saleQuentity);
         void UpdateProductForPurches(Product product);
 

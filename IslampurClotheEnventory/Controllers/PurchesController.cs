@@ -12,6 +12,7 @@ namespace IslampurClotheEnventory.Controllers
     public class PurchesController : Controller
     {
         private readonly IBasicServices _services;
+
         public PurchesController(IBasicServices services)
         {
             _services = services;

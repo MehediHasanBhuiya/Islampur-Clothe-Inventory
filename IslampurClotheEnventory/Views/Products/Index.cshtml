@@ -1,0 +1,146 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+@*<script src="~/lib/angularjs/angular/angular.js"></script>
+
+    <script src="~/lib/angularjs/Scripts/Product.js"></script>*@
+@*<script src="~/lib/angularjs/Scripts/productServices.js"></script>*@
+
+<h2>Index</h2>
+<br />
+<br />
+<div>
+    <div ng-controller="product">
+
+        <div class="jumbotron" style="padding:7px; margin-bottom:0;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+
+                            <label class="control-label">Name</label>
+                            <input type="text" class="form-control" ng-model="pName" />
+
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+
+                            <label class="control-label">Quentity</label>
+                            <input type="text" class="form-control" ng-model="pQuentity" />
+
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+
+                            <label class="control-label">Purches Price</label>
+                            <input type="text" class="form-control" ng-model="pPurchesPrice" />
+
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+
+                            <label class="control-label">Sale Price</label>
+                            <input type="text" class="form-control" ng-model="pSalePrice" />
+
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+
+                            <label class="control-label">Stored Iteam?</label>
+                            <div class="form-group form-inline"><input type="checkbox" style="height:20px;width:20px;" class="checkbox" ng-model="isStoed" /><span>{{isStoed}}</span></div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+
+                            @*<label class="control-label">Employee Id</label>*@<br />
+                            <input type="button" class="btn btn-success" value="Add" ng-click="Add()" />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+       
+        <br />
+        <br />
+        <table class="table table-hover table-bordered">
+            <thead class="bg-success">
+                <tr>
+                    <th>Id</th>
+                    <th>Product Name</th>
+                    <th>Product Quentity</th>
+                    <th>Product PurchesPrice</th>
+                    <th>Product SalePrice</th>
+                    <th>Stored Iteam ?</th>
+                    <th>Action</th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr ng-repeat="pro in products">
+                    <td>{{pro.productId}}</td>
+
+                    <td>
+                        <span ng-hide="pro.EditModel">{{pro.productName}}</span>
+                        <input type="text" ng-model="pro.productName" ng-show="pro.EditModel" />
+
+                    </td>
+
+                    <td>
+
+                        <span ng-hide="pro.EditModel">{{pro.productQuentity}}</span>
+                        <input type="text" ng-model="pro.productQuentity" ng-show="pro.EditModel" />
+                    </td>
+
+                    <td>
+
+                        <span ng-hide="pro.EditModel">{{pro.productPurchesPrice}}</span>
+                        <input type="text" ng-model="pro.productPurchesPrice" ng-show="pro.EditModel" />
+                    </td>
+
+                    <td>
+
+                        <span ng-hide="pro.EditModel">{{pro.productSalePrice}}</span>
+                        <input type="text" ng-model="pro.productSalePrice" ng-show="pro.EditModel" />
+                    </td>
+                    <td>
+
+                        <span ng-hide="pro.EditModel">{{pro.isStoed}}</span>
+                        <input type="checkbox" name="Yes" value="true" ng-model="pro.isStoed" ng-show="pro.EditModel" />
+                    </td>
+                    <td>
+                        @*<a class="Edit" href="javascript:;" ng-hide="m.EditMode" ng-click="Edit($index)">Edit</a>*@
+                        <a class="Edit" href="javascript:;" ng-hide="pro.EditModel" ng-click="Edit($index)">Edit</a>
+                        <a class="Update" href="javascript:;" ng-show="pro.EditModel" ng-click="Update($index)">Update</a>
+                        <a class="Cancel" href="javascript:;" ng-show="pro.EditModel" ng-click="Cancel($index)">Cancel</a>
+                        <a href="javascript:;" ng-hide="pro.EditModel" ng-click="Delete(pro.productId)">Delete</a>
+
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+
+@*@section Scripts
+    {
+    <script src="~/lib/angularjs/angular/angular.js"></script>
+    <script src="~/lib/angularjs/Scripts/Product.js"></script>
+
+    }*@
+

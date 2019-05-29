@@ -5,7 +5,7 @@ using IslampurClotheEnventory.Data.Models;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-
+using System.Collections.Generic;
 
 namespace IslampurClotheEnventory.Services
 {
@@ -83,9 +83,10 @@ namespace IslampurClotheEnventory.Services
 
             _context.Products.Attach(product);
             var entry = _context.Entry(product);
-            entry.Property(p => p.ProductPurchesPrice == product.ProductPurchesPrice);
-            entry.Property(p => p.ProductSalePrice == product.ProductSalePrice);
-            entry.Property(p => p.ProductQuentity == product.ProductQuentity + pro.ProductQuentity);
+            entry.Property(p => p.ProductPurchesPrice == product.ProductPurchesPrice).IsModified=true;
+            entry.Property(p => p.ProductSalePrice == product.ProductSalePrice).IsModified = true;
+            entry.Property(p => p.ProductQuentity == product.ProductQuentity + pro.ProductQuentity).IsModified = true;
+            _context.SaveChanges();
 
         }
 
@@ -103,6 +104,31 @@ namespace IslampurClotheEnventory.Services
         public void EditCustomer(Customer customer)
         {
             _context.Update(customer);
+            _context.SaveChanges();
+        }
+
+        public void EditProduct(Product product)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Product> GetAllProduct()
+        {
+            var product = (from p in _context.Products
+                           select p).ToList();
+            return product;
+        }
+
+        public void UpdateProduct(Product product)
+        {
+            _context.Update(product);
+            _context.SaveChanges();
+        }
+
+        public void DeleteProduct(int id)
+        {
+            Product product = _context.Products.Find(id);
+            _context.Products.Remove(product);
             _context.SaveChanges();
         }
     }

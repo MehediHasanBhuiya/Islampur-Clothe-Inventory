@@ -44,9 +44,11 @@ namespace IslampurClotheEnventory.Data.Migrations
 
                     b.Property<string>("ProductName");
 
-                    b.Property<double>("ProductPrice");
+                    b.Property<double>("ProductPurchesPrice");
 
                     b.Property<int>("ProductQuentity");
+
+                    b.Property<double>("ProductSalePrice");
 
                     b.HasKey("ProductId");
 
