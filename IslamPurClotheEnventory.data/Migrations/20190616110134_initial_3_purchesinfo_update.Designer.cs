@@ -3,14 +3,16 @@ using System;
 using IslampurClotheEnventory.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IslampurClotheEnventory.Data.Migrations
 {
     [DbContext(typeof(IslampurDbContext))]
-    partial class IslampurDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190616110134_initial_3_purchesinfo_update")]
+    partial class initial_3_purchesinfo_update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

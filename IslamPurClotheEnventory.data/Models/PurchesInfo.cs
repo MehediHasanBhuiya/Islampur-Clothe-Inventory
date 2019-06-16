@@ -16,6 +16,7 @@ namespace IslampurClotheEnventory.Data.Models
         public double PurchesPrice { get; set; }
         public double PurchesOnCash { get; set; }
         public double PurchesOnDebt { get; set; }
+        public int PurchesQuentity { get; set; }
         public int ProductId { get; set; }
 
 

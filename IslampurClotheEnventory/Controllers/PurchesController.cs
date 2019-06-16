@@ -17,14 +17,19 @@ namespace IslampurClotheEnventory.Controllers
         {
             _services = services;
         }
-        public IActionResult Add()
+        public IActionResult Index()
         {
             return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Add(PurchesViewModel purches)
+        public JsonResult Search([FromBody] Product product)
+        {
+            return Json(_services.ProductSearch(product.ProductName));
+        }
+
+        [HttpPost]
+        public IActionResult Add([FromBody] PurchesViewModel purches)
         {
             if (ModelState.IsValid)
             {
@@ -36,6 +41,8 @@ namespace IslampurClotheEnventory.Controllers
                     ProductSalePrice = purches.ProductSalePrice,
                     IsStoed = purches.IsStoed,
                 };
+
+                
 
                 if (_services.GetProductByName(purches.ProductName) == null)
                 {
@@ -55,11 +62,20 @@ namespace IslampurClotheEnventory.Controllers
                     PurchesPrice = purches.PurchesPrice,
                     PurchesOnCash = purches.PurchesOnCash,
                     PurchesOnDebt = purches.PurchesOnDebt,
-                    
+                    ProductId = (_services.GetProductByName(purches.ProductName)).ProductId,
+                    PurchesQuentity= purches.ProductQuentity
+                                       
                 };
+                _services.SetPurchesInfo(purchesInfo);
+
             }
 
             return View();
+        }
+
+        public JsonResult AllPurches()
+        {
+            return Json(_services.GetAllPurches());
         }
 
     }

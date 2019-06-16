@@ -1,0 +1,182 @@
+﻿
+@{
+    ViewData["Title"] = "Purches";
+}
+
+<h2>Purches</h2>
+
+<div ng-controller="Purches">
+    <div class="jumbotron" style="padding:7px; margin-bottom:0;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+
+                        <label class="control-label">Saler Name</label>
+                        <input type="text" class="form-control" ng-model="Name" />
+
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+
+                        <label class="control-label">Phone Number</label>
+                        <input type="text" class="form-control" ng-model="PhoneNumber" />
+
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+
+                        <label class="control-label">Email</label>
+                        <input type="text" class="form-control" ng-model="Email" />
+
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+
+                        <label class="control-label">Product Name</label>
+                        <input type="text" class="form-control" ng-model="ProductName" ng-keyup="search()" />
+
+                        <ul class="list-group" ng-model="hidethis" ng-hide="hidethis">
+                            <li class="list-group-item" ng-repeat="p in productList" ng-click="FillTextBox(p)">{{p.productName}}</li>
+                        </ul>
+
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+
+                        <label class="control-label">Product Quentity</label>
+                        <input type="text" class="form-control" ng-model="ProductQuentity" />
+
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+
+                        <label class="control-label">Total Price</label>
+                        <input type="text" class="form-control" ng-model="TotalPrice" />
+
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+
+                        <label class="control-label">Per Item Price</label>
+                        <input type="text" class="form-control" ng-model="ProductPurchesPrice" />
+
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+
+                        <label class="control-label">OnCash</label>
+                        <input type="text" class="form-control" ng-model="OnCash" ng-keyup="cash()" />
+
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+
+                        <label class="control-label">OnDebt</label>
+                        <input type="text" class="form-control" ng-model="OnDebt" ng-disabled="true" />
+
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+
+                        <label class="control-label">Per Item Sale Price</label>
+                        <input type="text" class="form-control" ng-model="ProductSalePrice" />
+
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+
+                        <label class="control-label">Stored Iteam?</label>
+                        <div class="form-group form-inline"><input type="checkbox" style="height:20px;width:20px;" class="checkbox" ng-model="isStoed" />&nbsp &nbsp<span>{{isStoed}}</span></div>
+
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+
+                        @*<label class="control-label">Employee Id</label>*@<br />
+                        <input type="button" class="btn btn-success" value="Add" ng-click="Add()" />
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <table class="table table-hover table-bordered table-responsive">
+        <thead class="bg-success">
+            <tr>
+                <th>Saler Name</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Product Name</th>
+                <th>Product Quentity</th>
+                <th>Total Price</th>
+                <th>Per Item Price</th>
+                <th>OnCash</th>
+                <th>OnDebt</th>
+                <th>Stored Iteam?</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr ng-repeat="pro in purchesinfo">
+
+                <td>
+                    <span>{{pro.purchesPersonName}}</span>
+                </td>
+
+                <td>
+                    <span>{{pro.purchesPersonPhoneNumber}}</span>
+                </td>
+
+                <td>
+                    <span>{{pro.purchesPersonEmail}}</span>
+                </td>
+
+                <td>
+                    <span>{{pro.product.productName}}</span>
+                </td>
+
+                <td>
+                    <span>{{pro.purchesQuentity}}</span>
+                </td>
+
+                <td>
+                    <span>{{pro.purchesPrice}}</span>
+                </td>
+
+                <td>
+                    <span>{{pro.product.productPurchesPrice}}</span>
+                </td>
+
+                <td>
+                    <span>{{pro.purchesOnCash}}</span>
+                </td>
+
+                <td>
+                    <span>{{pro.purchesOnDebt}}</span>
+                </td>
+
+                <td>
+                    <span>{{pro.product.isStoed}}</span>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+

@@ -21,8 +21,12 @@ namespace IslampurClotheEnventory.Data.interfaces
 
         void GetAllSale();
         IEnumerable<Product> GetAllProduct();
+        IEnumerable<Product> ProductSearch(string name);
+        IEnumerable<PurchesInfo> GetAllPurches();
+
         void GetSaleById(int id);
         Product GetProductById(int id);
+        
         Customer GetCustomerById(int id);
 
         Customer GetCustomerByName(string name);

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace IslampurClotheEnventory.Services
 {
@@ -40,8 +41,8 @@ namespace IslampurClotheEnventory.Services
         public Customer GetCustomerByName(string name)
         {
             Customer customer = (from c in _context.Customers
-                          where c.CustomerName == name
-                          select c).FirstOrDefault();
+                                 where c.CustomerName == name
+                                 select c).FirstOrDefault();
             return (customer);
         }
 
@@ -81,11 +82,14 @@ namespace IslampurClotheEnventory.Services
         {
             Product pro = GetProductByName(product.ProductName);
 
-            _context.Products.Attach(product);
-            var entry = _context.Entry(product);
-            entry.Property(p => p.ProductPurchesPrice == product.ProductPurchesPrice).IsModified=true;
-            entry.Property(p => p.ProductSalePrice == product.ProductSalePrice).IsModified = true;
-            entry.Property(p => p.ProductQuentity == product.ProductQuentity + pro.ProductQuentity).IsModified = true;
+            pro.ProductPurchesPrice = product.ProductPurchesPrice;
+            pro.ProductSalePrice = product.ProductSalePrice;
+            pro.ProductQuentity = product.ProductQuentity + pro.ProductQuentity;
+            //_context.Products.Attach(pro);
+            //var entry = _context.Entry(pro);
+            //entry.Property(p => p.ProductPurchesPrice == Convert.ToDouble(product.ProductPurchesPrice)).IsModified = true;
+            //entry.Property(p => p.ProductSalePrice == Convert.ToDouble(product.ProductSalePrice)).IsModified = true;
+            //entry.Property(p => p.ProductQuentity == product.ProductQuentity + pro.ProductQuentity).IsModified = true;
             _context.SaveChanges();
 
         }
@@ -130,6 +134,39 @@ namespace IslampurClotheEnventory.Services
             Product product = _context.Products.Find(id);
             _context.Products.Remove(product);
             _context.SaveChanges();
+        }
+
+        public IEnumerable<Product> ProductSearch(string name)
+        {
+            var product = (from p in _context.Products where p.ProductName.Contains(name) select p).ToList();
+
+            return product;
+        }
+
+        public IEnumerable<PurchesInfo> GetAllPurches()
+        {
+            var purches = (from p in _context.PurchesInfos
+                           select new PurchesInfo
+                           {
+                               Product = new Product
+                               {
+                                   ProductId = p.Product.ProductId,
+                                   ProductName = p.Product.ProductName,
+                                   ProductPurchesPrice = p.Product.ProductPurchesPrice,
+                                   IsStoed = p.Product.IsStoed
+
+                               },
+                               PurchesPersonName = p.PurchesPersonName,
+                               PurchesPersonPhoneNumber = p.PurchesPersonPhoneNumber,
+                               PurchesPersonEmail = p.PurchesPersonEmail,
+                               PurchesQuentity = p.PurchesQuentity,
+                               PurchesPrice = p.PurchesPrice,
+                               PurchesOnCash = p.PurchesOnCash,
+                               PurchesOnDebt = p.PurchesOnDebt
+
+                           }).ToList();
+            var ab = _context.PurchesInfos.Include(p => p.Product);
+            return purches;
         }
     }
 }

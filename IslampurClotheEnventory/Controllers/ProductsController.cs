@@ -1,4 +1,4 @@
-﻿using IslampurClotheEnventory.Data.interfaces;
+﻿ using IslampurClotheEnventory.Data.interfaces;
 using IslampurClotheEnventory.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 
