@@ -5,6 +5,24 @@ body {
     padding-bottom: 20px;
 }
 
+.search {
+    position: relative;
+}
+
+.search-ui {
+    background-color: #c7c7c7;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    z-index: 1000;
+}
+
+.search-li {
+    list-style-type: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
@@ -35,3 +53,7 @@ body {
         display: none;
     }
 }
+.padding{
+    padding:10px;
+}
+

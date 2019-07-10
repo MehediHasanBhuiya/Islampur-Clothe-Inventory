@@ -18,9 +18,30 @@ namespace IslampurClotheEnventory.Services
             _context = context;
         }
 
-        public void GetAllSale()
+        public IEnumerable<Sale> GetAllSale()
         {
-            throw new NotImplementedException();
+            var sales = (from s in _context.Sales
+                         orderby s.SaleTime descending
+                         select new Sale
+                         {
+                             Customers = new Customer
+                             {
+                                 CustomerName = s.Customers.CustomerName,
+                                 CustomerAddress = s.Customers.CustomerAddress,
+                                 CustomerEmail = s.Customers.CustomerEmail,
+                                 CustomerPhoneNumber = s.Customers.CustomerPhoneNumber
+                             },
+                             Products = new Product
+                             {
+                                 ProductName = s.Products.ProductName
+                             },
+                             OnCash = s.OnCash,
+                             OnDebt = s.OnDebt,
+                             SalePrice = s.SalePrice,
+                             SaleQuentity = s.SaleQuentity,
+                             SaleTime = s.SaleTime
+                         }).ToList();
+            return sales;
         }
 
         public Customer GetCustomerById(int id)
@@ -38,11 +59,11 @@ namespace IslampurClotheEnventory.Services
             throw new NotImplementedException();
         }
 
-        public Customer GetCustomerByName(string name)
+        public async Task<Customer> GetCustomerByName(string name)
         {
-            Customer customer = (from c in _context.Customers
-                                 where c.CustomerName == name
-                                 select c).FirstOrDefault();
+            Customer customer = await (from c in _context.Customers
+                                       where c.CustomerName == name
+                                       select c).FirstOrDefaultAsync();
             return (customer);
         }
 
@@ -85,11 +106,7 @@ namespace IslampurClotheEnventory.Services
             pro.ProductPurchesPrice = product.ProductPurchesPrice;
             pro.ProductSalePrice = product.ProductSalePrice;
             pro.ProductQuentity = product.ProductQuentity + pro.ProductQuentity;
-            //_context.Products.Attach(pro);
-            //var entry = _context.Entry(pro);
-            //entry.Property(p => p.ProductPurchesPrice == Convert.ToDouble(product.ProductPurchesPrice)).IsModified = true;
-            //entry.Property(p => p.ProductSalePrice == Convert.ToDouble(product.ProductSalePrice)).IsModified = true;
-            //entry.Property(p => p.ProductQuentity == product.ProductQuentity + pro.ProductQuentity).IsModified = true;
+
             _context.SaveChanges();
 
         }
@@ -99,9 +116,6 @@ namespace IslampurClotheEnventory.Services
             Product product = _context.Products.Find(productId);
             product.ProductQuentity = product.ProductQuentity - saleQuentity;
 
-            _context.Products.Attach(product);
-            var entry = _context.Entry(product);
-            entry.Property(p => p.ProductQuentity).IsModified = true;
             _context.SaveChanges();
         }
 
@@ -119,6 +133,7 @@ namespace IslampurClotheEnventory.Services
         public IEnumerable<Product> GetAllProduct()
         {
             var product = (from p in _context.Products
+                           orderby p.ProductName ascending
                            select p).ToList();
             return product;
         }
@@ -146,6 +161,7 @@ namespace IslampurClotheEnventory.Services
         public IEnumerable<PurchesInfo> GetAllPurches()
         {
             var purches = (from p in _context.PurchesInfos
+                           orderby p.PurchesDate descending
                            select new PurchesInfo
                            {
                                Product = new Product
@@ -166,6 +182,50 @@ namespace IslampurClotheEnventory.Services
 
                            }).ToList();
             var ab = _context.PurchesInfos.Include(p => p.Product);
+            return purches;
+        }
+
+        public IEnumerable<Customer> CustomerSearch(string name)
+        {
+            var customer = (from c in _context.Customers where c.CustomerName.Contains(name) select c).ToList();
+            return customer;
+        }
+
+        public IEnumerable<Sale> BestSale(DateTime date)
+        {
+            var sale = from s in _context.Sales
+                       where date < s.SaleTime
+                       group s by s.Products.ProductName into g
+                       let winner = (
+                       from a in g
+                       orderby a.SaleQuentity descending
+                       select new Sale
+                       {
+                           Products = new Product { ProductName = a.Products.ProductName },
+                           SaleQuentity = g.Sum(i => i.SaleQuentity)
+                       }).FirstOrDefault()
+
+                       select winner;
+            return sale;
+
+        }
+
+        public Sale SaleAccount()
+        {
+            Sale sale = new Sale();
+
+            sale.SalePrice = _context.Sales.Sum(a => a.SalePrice);
+            sale.OnCash = _context.Sales.Sum(a => a.OnCash);
+            sale.OnDebt = _context.Sales.Sum(a => a.OnDebt);
+
+            return sale;
+        }
+        public PurchesInfo PurchesAccount()
+        {
+            PurchesInfo purches = new PurchesInfo();
+
+            purches.PurchesPrice = _context.PurchesInfos.Sum(a => a.PurchesPrice);
+
             return purches;
         }
     }

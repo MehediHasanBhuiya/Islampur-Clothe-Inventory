@@ -16,6 +16,7 @@ namespace IslampurClotheEnventory.Models
         public double OnCash { get; set; }
         public double OnDebt { get; set; }
         public DateTime SaleTime { get; set; }
+        public int CustomerId { get; set; }
         public string CustomerName { get; set; }
         public string CustomerAddress { get; set; }
         public string CustomerPhoneNumber { get; set; }

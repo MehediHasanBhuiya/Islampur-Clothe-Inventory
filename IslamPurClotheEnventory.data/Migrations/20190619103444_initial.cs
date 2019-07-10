@@ -32,7 +32,8 @@ namespace IslampurClotheEnventory.Data.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     ProductName = table.Column<string>(nullable: true),
                     ProductQuentity = table.Column<int>(nullable: false),
-                    ProductPrice = table.Column<double>(nullable: false),
+                    ProductPurchesPrice = table.Column<double>(nullable: false),
+                    ProductSalePrice = table.Column<double>(nullable: false),
                     IsStoed = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
@@ -53,6 +54,7 @@ namespace IslampurClotheEnventory.Data.Migrations
                     PurchesPrice = table.Column<double>(nullable: false),
                     PurchesOnCash = table.Column<double>(nullable: false),
                     PurchesOnDebt = table.Column<double>(nullable: false),
+                    PurchesQuentity = table.Column<int>(nullable: false),
                     ProductId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -105,8 +107,7 @@ namespace IslampurClotheEnventory.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Sales_CustomerId",
                 table: "Sales",
-                column: "CustomerId",
-                unique: true);
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sales_ProductId",

@@ -6,9 +6,12 @@
     <title>@ViewData["Title"] - IslampurClotheEnventory</title>
 
     <environment include="Development">
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
-        <link href="~/lib/angularjs/toastr/toastr.css" rel="stylesheet" />
+
+        <link href="~/lib/angularjs/toastr/toastr.css" rel="stylesheet" asp-append-version="true" />
+        <link href="~/lib/angularjs/angularjsDatePicker/angular-datepicker.css" rel="stylesheet" asp-append-version="true" />
+
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -17,11 +20,16 @@
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
 
-    <script src="~/lib/angularjs/angular/angular.js"></script>
-    <script src="~/js/angularScripts/Controllers/Product.js"></script>
-    <script src="~/js/angularScripts/Services/productServices.js"></script>
-    <script src="~/js/angularScripts/Controllers/PurchesController.js"></script>
-    <script src="~/js/angularScripts/Services/PurchesServices.js"></script>
+    <script src="~/lib/angularjs/angular/angular.js" asp-append-version="true"></script>
+    <script src="~/js/angularScripts/Controllers/Other/dirPagination.js" asp-append-version="true"></script>
+    <script src="~/lib/angularjs/angularjsDatePicker/angular-datepicker.js" asp-append-version="true"></script>
+    <script src="~/js/angularScripts/Controllers/Product.js" asp-append-version="true"></script>
+    <script src="~/js/angularScripts/Services/productServices.js" asp-append-version="true"></script>
+    <script src="~/js/angularScripts/Controllers/PurchesController.js" asp-append-version="true"></script>
+    <script src="~/js/angularScripts/Services/PurchesServices.js" asp-append-version="true"></script>
+    <script src="~/js/angularScripts/Controllers/Sale.js" asp-append-version="true"></script>
+    <script src="~/js/angularScripts/Services/SaleServices.js" asp-append-version="true"></script>
+
 
 </head>
 <body ng-app="app">

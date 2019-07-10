@@ -9,6 +9,14 @@
     {
       "library": "toastr.js@2.1.4",
       "destination": "wwwroot/lib/angularjs/toastr/"
+    },
+    {
+      "library": "angular-ui-bootstrap@2.5.0",
+      "destination": "wwwroot/lib/angularjs/angular-ui/"
+    },
+    {
+      "library": "angularjs-datepicker@2.1.23",
+      "destination": "wwwroot/lib/angularjs/angularjsDatePicker"
     }
   ]
 }

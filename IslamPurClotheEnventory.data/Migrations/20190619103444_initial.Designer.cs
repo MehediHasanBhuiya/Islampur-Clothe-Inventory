@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IslampurClotheEnventory.Data.Migrations
 {
     [DbContext(typeof(IslampurDbContext))]
-    [Migration("20190521102635_secound-update")]
-    partial class secoundupdate
+    [Migration("20190619103444_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -78,6 +78,8 @@ namespace IslampurClotheEnventory.Data.Migrations
 
                     b.Property<double>("PurchesPrice");
 
+                    b.Property<int>("PurchesQuentity");
+
                     b.HasKey("PurchesId");
 
                     b.HasIndex("ProductId");
@@ -106,8 +108,7 @@ namespace IslampurClotheEnventory.Data.Migrations
 
                     b.HasKey("SaleId");
 
-                    b.HasIndex("CustomerId")
-                        .IsUnique();
+                    b.HasIndex("CustomerId");
 
                     b.HasIndex("ProductId");
 
@@ -125,8 +126,8 @@ namespace IslampurClotheEnventory.Data.Migrations
             modelBuilder.Entity("IslampurClotheEnventory.Data.Models.Sale", b =>
                 {
                     b.HasOne("IslampurClotheEnventory.Data.Models.Customer", "Customers")
-                        .WithOne("Sale")
-                        .HasForeignKey("IslampurClotheEnventory.Data.Models.Sale", "CustomerId")
+                        .WithMany("Sales")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("IslampurClotheEnventory.Data.Models.Product", "Products")

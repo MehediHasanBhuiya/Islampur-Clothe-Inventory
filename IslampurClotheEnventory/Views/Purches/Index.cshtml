@@ -35,13 +35,13 @@
                 </div>
 
                 <div class="col-md-2">
-                    <div class="form-group">
+                    <div class="form-group search">
 
                         <label class="control-label">Product Name</label>
-                        <input type="text" class="form-control" ng-model="ProductName" ng-keyup="search()" />
+                        <input type="text" class="form-control " ng-model="ProductName" ng-keyup="search()" />
 
-                        <ul class="list-group" ng-model="hidethis" ng-hide="hidethis">
-                            <li class="list-group-item" ng-repeat="p in productList" ng-click="FillTextBox(p)">{{p.productName}}</li>
+                        <ul class="list-group search-ui" ng-model="hidethis" ng-hide="hidethis">
+                            <li @*style="list-style-type: none; padding: 5px 10px; cursor: pointer;"*@ class="list-group-item search-li" ng-repeat="p in productList" ng-click="FillTextBox(p)">{{p.productName}}</li>
                         </ul>
 
                     </div>
@@ -50,7 +50,7 @@
                     <div class="form-group">
 
                         <label class="control-label">Product Quentity</label>
-                        <input type="text" class="form-control" ng-model="ProductQuentity" />
+                        <input type="text" class="form-control" ng-model="ProductQuentity"  />
 
                     </div>
                 </div>

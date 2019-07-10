@@ -13,35 +13,23 @@ namespace IslampurClotheEnventory.Controllers
     public class SaleController : Controller
     {
         private readonly IBasicServices _services;
+
         public SaleController(IBasicServices services)
         {
             _services = services;
         }
+
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: Sale/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Sale/Create
-        public ActionResult Add()
-        {
-            return View();
-        }
-
-        // POST: Sale/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Add(SaleView sale)
+        public ActionResult AddSale([FromBody] SaleView sale)
         {
             if (ModelState.IsValid)
             {
-                if(_services.GetCustomerByName(sale.CustomerName) == null)
+                if (_services.GetCustomerByName(sale.CustomerName) == null)
                 {
                     Customer customer = new Customer
                     {
@@ -57,64 +45,64 @@ namespace IslampurClotheEnventory.Controllers
                     SaleQuentity = sale.SaleQuentity,
                     SalePrice = sale.SalePrice,
                     OnCash = sale.OnCash,
-                    OnDebt = sale.SalePrice - sale.OnCash,
+                    OnDebt = sale.OnDebt,
                     SaleTime = DateTime.Now,
-                    CustomerId = _services.GetCustomerByName(sale.CustomerName).CustomerId,
-                    ProductId = sale.ProductId,
-                    
+                    CustomerId = _services.GetCustomerByName(sale.CustomerName).Result.CustomerId,
+                    ProductId = sale.ProductId
                 };
                 _services.SetSale(s);
                 _services.UpdateProductQuentityForSale(sale.ProductId, sale.SaleQuentity);
 
 
             }
-            return View();
+            return new EmptyResult();
         }
 
-        // GET: Sale/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Sale/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public JsonResult SearchCusetomer([FromBody] Customer customer)
         {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return Json(_services.CustomerSearch(customer.CustomerName));
         }
 
-        // GET: Sale/Delete/5
-        public ActionResult Delete(int id)
+
+        public JsonResult AllSale()
+        {
+            return Json(_services.GetAllSale());
+        }
+
+        public ActionResult BestSale()
         {
             return View();
         }
 
-        // POST: Sale/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public JsonResult BestSaleData([FromBody] string product)
         {
-            try
+            if (product == null || product.Equals("empty"))
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
+                var lastWeek = DateTime.Today.AddDays(-7);
+                return Json(_services.BestSale(lastWeek));
             }
-            catch
+            else
             {
-                return View();
+                DateTime date = DateTime.ParseExact(product, "d", null);
+                return Json(_services.BestSale(date));
             }
         }
+
+        public JsonResult RevinueInfo()
+        {
+            RevinueInfoViewModel revinue = new RevinueInfoViewModel
+            {
+                TotalSales = _services.SaleAccount().SalePrice,
+                TotalOnCash = _services.SaleAccount().OnCash,
+                TotalOndebt = _services.SaleAccount().OnDebt,
+                TotalPurches = _services.PurchesAccount().PurchesPrice,
+                Revinue = _services.SaleAccount().SalePrice - _services.PurchesAccount().PurchesPrice
+            };
+
+            return Json(revinue);
+        }
+
     }
 }

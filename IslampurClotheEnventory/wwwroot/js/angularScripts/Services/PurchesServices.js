@@ -9,10 +9,7 @@
             return $http.get('/Purches/AllPurches/')
 
         },
-        deleteProduct: function (id) {
-            
-            return $http.post('/Purches/DeleteProduct/', id)
-        },
+  
         addpurches: function (purches) {
             debugger
             return $http.post('/Purches/Add/', purches)

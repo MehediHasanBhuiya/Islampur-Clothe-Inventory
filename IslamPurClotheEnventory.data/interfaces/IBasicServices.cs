@@ -1,8 +1,6 @@
 ﻿using IslampurClotheEnventory.Data.Models;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace IslampurClotheEnventory.Data.interfaces
@@ -19,23 +17,26 @@ namespace IslampurClotheEnventory.Data.interfaces
         Task SetCustomer(Customer customer);
         void SetProduct(Product product);
 
-        void GetAllSale();
+        IEnumerable<Sale> GetAllSale();
         IEnumerable<Product> GetAllProduct();
         IEnumerable<Product> ProductSearch(string name);
+        IEnumerable<Customer> CustomerSearch(string name);
         IEnumerable<PurchesInfo> GetAllPurches();
+        IEnumerable<Sale> BestSale(DateTime date);
 
         void GetSaleById(int id);
         Product GetProductById(int id);
         
         Customer GetCustomerById(int id);
 
-        Customer GetCustomerByName(string name);
+        Task<Customer> GetCustomerByName(string name);
         Product GetProductByName(string name);
 
         void UpdateProduct(Product product);
         void UpdateProductQuentityForSale(int productId,int saleQuentity);
         void UpdateProductForPurches(Product product);
-
+        Sale SaleAccount();
+        PurchesInfo PurchesAccount();
 
     }
 }

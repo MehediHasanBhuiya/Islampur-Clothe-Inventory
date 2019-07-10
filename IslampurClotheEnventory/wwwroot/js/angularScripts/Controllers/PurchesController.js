@@ -50,6 +50,7 @@ myApp.controller('Purches', function ($scope, PurchesServices) {
 
         PurchesServices.addpurches(pur).then(function (response) {
             console.log = response.data;
+            $scope.purchesinfo.push = response.data;
         }).catch(function onError(error) {
             console.log(error);
         });

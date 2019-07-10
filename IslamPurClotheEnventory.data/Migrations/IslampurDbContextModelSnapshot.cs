@@ -106,8 +106,7 @@ namespace IslampurClotheEnventory.Data.Migrations
 
                     b.HasKey("SaleId");
 
-                    b.HasIndex("CustomerId")
-                        .IsUnique();
+                    b.HasIndex("CustomerId");
 
                     b.HasIndex("ProductId");
 
@@ -125,8 +124,8 @@ namespace IslampurClotheEnventory.Data.Migrations
             modelBuilder.Entity("IslampurClotheEnventory.Data.Models.Sale", b =>
                 {
                     b.HasOne("IslampurClotheEnventory.Data.Models.Customer", "Customers")
-                        .WithOne("Sale")
-                        .HasForeignKey("IslampurClotheEnventory.Data.Models.Sale", "CustomerId")
+                        .WithMany("Sales")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("IslampurClotheEnventory.Data.Models.Product", "Products")

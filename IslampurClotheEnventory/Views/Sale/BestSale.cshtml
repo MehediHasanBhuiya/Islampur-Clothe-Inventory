@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewData["Title"] = "SaleInfo";
+}
+<br />
+<br />
+
+
+
+<div ng-controller="Sales">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 jumbotron">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="control-label ">Best Sale : </label>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="col-md-2"></div>
+                    <div class="col-md-6">
+                        <datepicker date-format="{{'MM/dd/yyyy'}}">
+                            <input class="form-control" ng-model="date" type="text" />
+                        </datepicker>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="button" class="btn btn-primary" value="Click" ng-click="bestSale()" />
+                    </div>
+
+                </div>
+                <br />
+
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="bg-success">
+                                <tr>
+
+                                    <th>Product Name</th>
+                                    <th>Product Quentity</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr ng-repeat="sale in bestSaledata">
+
+                                    <td>
+                                        <span>{{sale.products.productName}}</span>
+                                    </td>
+
+                                    <td>
+                                        <span>{{sale.saleQuentity}}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 jumbotron">
+                <label class="control-label ">Revinue Details : </label>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th colspan="2"> Statement </th>
+                                <th colspan="2"> Amount </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="2">Purches</td>
+                                <td colspan="2">{{tPurches}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Sale</td>
+                                <td colspan="2">{{tSale}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">OnDebt</td>
+                                <td colspan="2">{{tOnDebt}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">OnCash</td>
+                                <td colspan="2">{{tOnCash}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Revinue</td>
+                                <td colspan="2">{{tRevinue}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

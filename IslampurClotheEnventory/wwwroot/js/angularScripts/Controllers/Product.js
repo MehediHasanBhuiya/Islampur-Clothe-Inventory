@@ -1,6 +1,9 @@
 ﻿
-var myApp = angular.module('app', []);
+var myApp = angular.module('app', ['angularUtils.directives.dirPagination', '720kb.datepicker']);
 myApp.controller('product', function ($scope, $window, $http, productService) {
+
+    toastr.options.positionClass = 'toast-bottom-right';
+    toastr.options.newestOnTop = false;
 
     productService.getproduct().then(function (response) {
         $scope.products = response.data;
@@ -19,10 +22,15 @@ myApp.controller('product', function ($scope, $window, $http, productService) {
             isStoed: $scope.isStoed
         };
         productService.createProduct(product).then(function (response) {
-            console.log = response.data;
-            toastr.options.positionClass = 'toast-bottom-right';
-            toastr.success('Product add successfully');
-            toastr.options.newestOnTop = false;
+
+            if (response.data.isSuccess) {
+                toastr.success(response.data.message);
+            }
+            else {
+                toastr.warning(response.data.message);
+            }
+            
+            
             productService.getproduct().then(function (response) {
                 $scope.products = response.data;
             }).catch(function onError(error) {
@@ -68,10 +76,12 @@ myApp.controller('product', function ($scope, $window, $http, productService) {
         productService.post(product).then(function (response) {
             debugger
             $scope.products[index].EditModel = false;
-            toastr.options.positionClass = 'toast-bottom-right';
-            toastr.success('Product update successfully');
-            
-            console.log = response.data;
+            if (response.data.isSuccess) {
+                toastr.success(response.data.message);
+            }       
+            else {
+                toastr.warning(response.data.message);
+            }
         }).catch(function onError(error) {
             console.log(error);
         });
@@ -80,10 +90,14 @@ myApp.controller('product', function ($scope, $window, $http, productService) {
     $scope.Delete = function (id) {
         if ($window.confirm("Are you Sure ?")) {
             productService.deleteProduct(id).then(function (response) {
-                debugger
-                console.log = response.data;
-                toastr.options.positionClass = 'toast-bottom-right';
-                toastr.warning('Product delete successfully');
+
+                if (response.data.isSuccess) {
+                    toastr.success(response.data.message);
+                }
+                else {
+                    toastr.warning(response.data.message);
+                }
+
                 productService.getproduct().then(function (response) {
                     $scope.products = response.data;
                     
