@@ -2,8 +2,7 @@
 var myApp = angular.module('app', ['angularUtils.directives.dirPagination', '720kb.datepicker']);
 myApp.controller('product', function ($scope, $window, $http, productService) {
 
-    toastr.options.positionClass = 'toast-bottom-right';
-    toastr.options.newestOnTop = false;
+    
 
     productService.getproduct().then(function (response) {
         $scope.products = response.data;

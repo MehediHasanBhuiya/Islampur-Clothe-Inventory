@@ -13,7 +13,9 @@ namespace IslampurClotheEnventory.Data.Models
         public string CustomerAddress { get; set; }
         public string CustomerPhoneNumber { get; set; }
         public string CustomerEmail { get; set; }
+        public string UserId { get; set; }
 
         public ICollection<Sale> Sales { get; set; }
+        public ApplicationUser User { get; set; }
     }
 }

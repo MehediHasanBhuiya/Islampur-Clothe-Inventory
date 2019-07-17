@@ -19,5 +19,8 @@ namespace IslampurClotheEnventory.Data.Models
 
         public int CustomerId { get; set; }
         public Customer Customers { get; set; }
+
+        public string UserId { get; set; }
+        public ApplicationUser User { get; set; }
     }
 }

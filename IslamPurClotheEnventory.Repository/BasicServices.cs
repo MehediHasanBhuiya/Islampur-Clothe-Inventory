@@ -20,6 +20,7 @@ namespace IslampurClotheEnventory.Services
 
         public IEnumerable<Sale> GetAllSale()
         {
+
             var sales = (from s in _context.Sales
                          orderby s.SaleTime descending
                          select new Sale
@@ -151,9 +152,9 @@ namespace IslampurClotheEnventory.Services
             _context.SaveChanges();
         }
 
-        public IEnumerable<Product> ProductSearch(string name)
+        public IEnumerable<Product> ProductSearch(string name, string id)
         {
-            var product = (from p in _context.Products where p.ProductName.Contains(name) select p).ToList();
+            var product = (from p in _context.Products where p.ProductName.Contains(name) && p.UserId == id select p).ToList();
 
             return product;
         }

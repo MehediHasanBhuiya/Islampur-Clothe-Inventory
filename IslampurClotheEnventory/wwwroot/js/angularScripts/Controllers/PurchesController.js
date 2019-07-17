@@ -1,6 +1,9 @@
 ﻿
 myApp.controller('Purches', function ($scope, PurchesServices) {
 
+    toastr.options.positionClass = 'toast-bottom-right';
+    toastr.options.newestOnTop = false;
+
     $scope.hidethis = true;
 
     $scope.search = function () {
@@ -49,8 +52,13 @@ myApp.controller('Purches', function ($scope, PurchesServices) {
         };
 
         PurchesServices.addpurches(pur).then(function (response) {
-            console.log = response.data;
-            $scope.purchesinfo.push = response.data;
+            if (response.data.isSuccess) {
+                toastr.success(response.data.message);
+            }
+            else {
+                toastr.warning(response.data.message);
+            }
+            
         }).catch(function onError(error) {
             console.log(error);
         });
@@ -58,9 +66,7 @@ myApp.controller('Purches', function ($scope, PurchesServices) {
     };
 
     PurchesServices.getpurchesinfo().then(function (response) {
-        debugger
         $scope.purchesinfo = response.data;
-        console.log = response.data;
         
     });
 

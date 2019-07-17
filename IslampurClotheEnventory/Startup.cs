@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using IslampurClotheEnventory.Data.interfaces;
 using IslampurClotheEnventory.Services;
+using IslampurClotheEnventory.Data.Models;
 
 namespace IslampurClotheEnventory
 {
@@ -36,16 +37,26 @@ namespace IslampurClotheEnventory
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseMySql(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //    options.UseMySql(
+            //        Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDbContextPool<IslampurDbContext>(optiones =>
                 optiones.UseMySql(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<ApplicationUser, IdentityRole>(option =>
+            {
+                option.Password.RequiredUniqueChars = 0;
+                option.Password.RequireLowercase = false;
+                option.Password.RequireNonAlphanumeric = false;
+                option.Password.RequireDigit = false;
+            })
+            .AddEntityFrameworkStores<IslampurDbContext>()
+            .AddDefaultTokenProviders()
+            .AddDefaultUI();
+
+            
 
             services.AddScoped<IBasicServices, BasicServices>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

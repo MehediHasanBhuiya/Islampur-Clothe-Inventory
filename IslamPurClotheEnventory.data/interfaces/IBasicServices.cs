@@ -19,7 +19,7 @@ namespace IslampurClotheEnventory.Data.interfaces
 
         IEnumerable<Sale> GetAllSale();
         IEnumerable<Product> GetAllProduct();
-        IEnumerable<Product> ProductSearch(string name);
+        IEnumerable<Product> ProductSearch(string name, string id);
         IEnumerable<Customer> CustomerSearch(string name);
         IEnumerable<PurchesInfo> GetAllPurches();
         IEnumerable<Sale> BestSale(DateTime date);

@@ -1,10 +1,11 @@
 ﻿using IslampurClotheEnventory.Data.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace IslampurClotheEnventory.Data
 {
-    public class IslampurDbContext : DbContext
+    public class IslampurDbContext : IdentityDbContext<ApplicationUser>
     {
         public IslampurDbContext(DbContextOptions<IslampurDbContext> options) : base(options)
         {

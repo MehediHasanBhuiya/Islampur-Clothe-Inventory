@@ -18,6 +18,7 @@ namespace IslampurClotheEnventory.Controllers
         {
             _services = services;
         }
+        TosterResultViewModel result = new TosterResultViewModel();
 
         public ActionResult Index()
         {
@@ -29,31 +30,40 @@ namespace IslampurClotheEnventory.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_services.GetCustomerByName(sale.CustomerName) == null)
+                try
                 {
-                    Customer customer = new Customer
+                    if (_services.GetCustomerByName(sale.CustomerName) == null)
                     {
-                        CustomerName = sale.CustomerName,
-                        CustomerAddress = sale.CustomerAddress,
-                        CustomerPhoneNumber = sale.CustomerPhoneNumber,
-                        CustomerEmail = sale.CustomerEmail
+                        Customer customer = new Customer
+                        {
+                            CustomerName = sale.CustomerName,
+                            CustomerAddress = sale.CustomerAddress,
+                            CustomerPhoneNumber = sale.CustomerPhoneNumber,
+                            CustomerEmail = sale.CustomerEmail
+                        };
+                        _services.SetCustomer(customer);
+                    }
+                    Sale s = new Sale
+                    {
+                        SaleQuentity = sale.SaleQuentity,
+                        SalePrice = sale.SalePrice,
+                        OnCash = sale.OnCash,
+                        OnDebt = sale.OnDebt,
+                        SaleTime = DateTime.Now,
+                        CustomerId = _services.GetCustomerByName(sale.CustomerName).Result.CustomerId,
+                        ProductId = sale.ProductId
                     };
-                    _services.SetCustomer(customer);
+                    _services.SetSale(s);
+                    _services.UpdateProductQuentityForSale(sale.ProductId, sale.SaleQuentity);
+                    result.IsSuccess = true;
+                    result.Message = "Sale successfully complete";
                 }
-                Sale s = new Sale
+                catch (Exception ex)
                 {
-                    SaleQuentity = sale.SaleQuentity,
-                    SalePrice = sale.SalePrice,
-                    OnCash = sale.OnCash,
-                    OnDebt = sale.OnDebt,
-                    SaleTime = DateTime.Now,
-                    CustomerId = _services.GetCustomerByName(sale.CustomerName).Result.CustomerId,
-                    ProductId = sale.ProductId
-                };
-                _services.SetSale(s);
-                _services.UpdateProductQuentityForSale(sale.ProductId, sale.SaleQuentity);
 
-
+                    result.IsSuccess = false;
+                    result.Message = ex.Message;
+                }
             }
             return new EmptyResult();
         }

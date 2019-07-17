@@ -1,6 +1,9 @@
 ﻿
 myApp.controller('Sales', function ($scope, SaleServices) {
 
+    toastr.options.positionClass = 'toast-bottom-right';
+    toastr.options.newestOnTop = false;
+
     $scope.hidethisProduct = true;
     $scope.hidethisCustomer = true;
 
@@ -82,9 +85,13 @@ myApp.controller('Sales', function ($scope, SaleServices) {
         };
 
         SaleServices.addsales(sale).then(function (response) {
-            debugger
-            console.log = response.data;
-            $scope.saleinfo.push = response.data;
+
+            if (response.data.isSuccess) {
+                toastr.success(response.data.message);
+            }
+            else {
+                toastr.warning(response.data.message);
+            }
 
             $scope.productId = "";
             $scope.ProductName = "";
