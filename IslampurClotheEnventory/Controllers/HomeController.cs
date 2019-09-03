@@ -1,15 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using IslampurClotheEnventory.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using IslampurClotheEnventory.Models;
+using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 
 namespace IslampurClotheEnventory.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ILogger<HomeController> logger;
+
+        public HomeController(ILogger<HomeController> logger)
+        {
+            this.logger = logger;
+        }
         public IActionResult Index()
         {
             return View();
@@ -33,11 +38,30 @@ namespace IslampurClotheEnventory.Controllers
         {
             return View();
         }
+        [Route("/Home/NotFound/{statusCode}")]
+        [AllowAnonymous]
+        public IActionResult HttpStatusCodeHandler(int statusCode)
+        {
+            var statusCodeResult = HttpContext.Features.Get<IStatusCodeReExecuteFeature>();
+            switch (statusCode)
+            {
+                case 404:
+                    ViewBag.ErrorMessage = "Sorry, the resource you request could not found";
+                    logger.LogWarning($"404 Error Occured. Path = {statusCodeResult.OriginalPath} " +
+                        $" and QueryString = {statusCodeResult.OriginalQueryString}");
+                    break;
+                
+            }
+            return View("NotFound");
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var exception = HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+
+            logger.LogError($"The path {exception.Path} threw an exception {exception.Error}");
+            return View("Error");
         }
     }
 }

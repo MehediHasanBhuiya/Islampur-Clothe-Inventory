@@ -1,11 +1,13 @@
 ﻿using IslampurClotheEnventory.Data.interfaces;
 using IslampurClotheEnventory.Data.Models;
 using IslampurClotheEnventory.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
 namespace IslampurClotheEnventory.Controllers
 {
+    [Authorize]
     public class ProductsController : Controller
     {
         private readonly IBasicServices _services;

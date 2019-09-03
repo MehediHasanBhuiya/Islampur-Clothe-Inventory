@@ -24,7 +24,7 @@ myApp.controller('product', function ($scope, $window, $http, productService) {
 
             if (response.data.isSuccess) {
                 toastr.success(response.data.message);
-            }
+            } 
             else {
                 toastr.warning(response.data.message);
             }

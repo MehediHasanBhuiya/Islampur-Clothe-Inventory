@@ -74,7 +74,9 @@ namespace IslampurClotheEnventory
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
+                app.UseStatusCodePagesWithReExecute("/Home/NotFound/{0}");
+                
+                //app.UseHsts();
             }
 
             app.UseHttpsRedirection();
